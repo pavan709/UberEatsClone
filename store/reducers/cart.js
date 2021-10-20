@@ -1,4 +1,4 @@
-import { ADD_TO_CART } from "../actions/cart";
+import { ADD_TO_CART, CLEAR_CART } from "../actions/cart";
 const intialState = {
   selectedItems: { items: [], restaurantName: "" },
 };
@@ -28,6 +28,8 @@ export default (state = intialState, action) => {
         return newState;
       }
     }
+    case CLEAR_CART:
+      return intialState;
   }
   return state;
 };

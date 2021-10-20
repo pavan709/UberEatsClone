@@ -2,16 +2,20 @@ import React,{useState} from "react";
 import { StyleSheet, Text, View,StatusBar } from "react-native";
 import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
-import RootNavigation from "./navigation/navigation";
 import cartReducer from "./store/reducers/cart";
-import { createStore, combineReducers } from "redux";
+import authReducer from './store/reducers/auth';
+import orderReducer from './store/reducers/orders';
+import { createStore, combineReducers,applyMiddleware } from "redux";
 import {Provider as ReduxProvider} from 'react-redux';
-
+import AppNavigator from "./navigation/AppNavigator";
+import ReduxThunk from 'redux-thunk';
 const rootReducer = combineReducers({
   cart: cartReducer,
+  auth:authReducer,
+  orders:orderReducer,
 })
 
-const store = createStore(rootReducer);
+const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
 
 const fetchFonts = () => {
   return Font.loadAsync({
@@ -37,7 +41,7 @@ export default function App() {
   }
   return (
     <ReduxProvider store={store}>
-      <RootNavigation />
+      <AppNavigator />
     </ReduxProvider>
   );
 }

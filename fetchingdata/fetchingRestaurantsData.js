@@ -1,7 +1,7 @@
 import vars from "../env";
-export const getRestaurantsFromYelp = async (activeTab) => {
+export const getRestaurantsFromYelp = async (activeTab,place) => {
   const yelpUrl =
-    "https://api.yelp.com/v3/businesses/search?term=restaurants&location=New York City";
+    `https://api.yelp.com/v3/businesses/search?term=restaurants&location=${place}`;
   const apiOptions = {
     headers: {
       Authorization: `Bearer ${vars.YELP_API_KEY}`,
@@ -10,6 +10,7 @@ export const getRestaurantsFromYelp = async (activeTab) => {
   try {
     const response = await fetch(yelpUrl, apiOptions);
     if (!response.ok) {
+      console.log('this is response',response.ok);
       throw new Error("something went wrong!");
     }
     const resData = await response.json();
@@ -18,6 +19,7 @@ export const getRestaurantsFromYelp = async (activeTab) => {
       business.transactions.includes(activeTab.toLowerCase())
     );
   } catch (error) {
+    // console.log(error);
     throw error;
   }
 };

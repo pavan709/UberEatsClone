@@ -21,31 +21,33 @@ const HomeScreen = (props) => {
   const [restaurantsData, setRestaurantsData] = useState();
   const [error, setError] = useState();
   const [activeTab, setActiveTab] = useState("Delivery");
+  const [place,setPlace]=useState('New York');
 
   const loadRestaurants = useCallback(() => {
     setRestaurantsData(null);
     setError(null);
-    getRestaurantsFromYelp(activeTab)
+    getRestaurantsFromYelp(activeTab,place)
       .then((data) => setRestaurantsData(data))
       .catch((e) => setError(e));
-  }, [getRestaurantsFromYelp, setRestaurantsData, setError,activeTab]);
+  }, [getRestaurantsFromYelp, setRestaurantsData, setError,activeTab,place]);
 
   useEffect(() => {
-    getRestaurantsFromYelp(activeTab)
+    getRestaurantsFromYelp(activeTab,place)
       .then((data) => setRestaurantsData(data))
       .catch((e) => setError(e));
-  }, [getRestaurantsFromYelp, setRestaurantsData, setError,activeTab]);
+  }, [getRestaurantsFromYelp, setRestaurantsData, setError,activeTab,place]);
 
   // useEffect(() => {
   //   console.log(error);
-  //   console.log("inside home", restaurantsData);
+  //   console.log("inside home",typeof restaurantsData, restaurantsData);
   // }, [restaurantsData, error]);
 
+  // console.log('typeof',typeof restaurantsData);
   return (
     <SafeAreaView style={styles.screen}>
       <View style={{ backgroundColor: "white", padding: 15 }}>
         <HeaderTabs activeTab={activeTab} setActiveTab={setActiveTab} />
-        <SearchBar />
+        <SearchBar setPlace={setPlace}/>
       </View>
  
       {!restaurantsData && !error ? (

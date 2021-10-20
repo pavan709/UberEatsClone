@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -7,12 +7,14 @@ import {
   TouchableOpacity,
   Platform,
   Modal,
+  Alert,
 } from "react-native";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import OrderItem from "./OrderItem";
 import firebase from "../../firebase";
 import LottieView from "lottie-react-native";
-
+import * as orderActions from '../../store/actions/orders';
+import * as cartActions from '../../store/actions/cart';
 let TouchableCmp = TouchableOpacity;
 if (Platform.OS === "android" && Platform.Version >= 22)
   TouchableCmp = TouchableNativeFeedback;
@@ -20,35 +22,41 @@ if (Platform.OS === "android" && Platform.Version >= 22)
 const ViewCart = (props) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState();
   const { items, restaurantName } = useSelector(
     (state) => state.cart.selectedItems
   );
-
+const dispatch = useDispatch();
   // we are removing $ symbol first from string and then accumulation with reduce method
   const total = items
-    .map((item) => Number(item.price.replace("$", "")))
+    .map((item) => Number(item.price.replace("₹", "")))
     .reduce((prev, curr) => prev + curr, 0);
   const totalUSD = total.toLocaleString("en-US", {
     style: "currency",
     currency: "IND",
   });
 
-  const addOrderToFirebase = () => {
-    const db = firebase.firestore();
-    db.collection("orders")
-      .add({
-        items: items,
-        restaurantName: restaurantName,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-      })
-      .then(() => {
-        setTimeout(() => {
-          setLoading(false);
-          setModalVisible(false);
-          props.navigation.navigate("OrderCompleted");
-        }, 2000);
-      });
+  const addOrderHandler = async () => {
+    try{
+      await dispatch(orderActions.addOrder(items,total,restaurantName));
+      // await dispatch(cartActions.clearCart());
+      setLoading(false),
+      props.navigation.navigate('OrderCompleted')
+    }
+    catch(error)
+    {
+      setError(error);
+      setLoading(false);
+      setModalVisible(false);
+    }
   };
+
+  useEffect(() => {
+    if(error)
+    {
+      Alert.alert('Something went wrong','Check network connection!',[{text:'Okay'}])
+    }
+  }, [error])
 
   const checkoutModalContent = () => {
     return (
@@ -64,7 +72,7 @@ const ViewCart = (props) => {
               <Text>₹{totalUSD}</Text>
             </View>
             <View style={{ flexDirection: "row", justifyContent: "center" }}>
-              <TouchableCmp onPress={() => {setModalVisible(false); setLoading(true);addOrderToFirebase();}}>
+              <TouchableCmp onPress={() => {setModalVisible(false); setLoading(true);addOrderHandler();}}>
                 <View style={styles.checkout}>
                   <Text style={styles.checkoutText}>Checkout</Text>
                   <Text
