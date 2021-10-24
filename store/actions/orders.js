@@ -4,9 +4,7 @@ export const ADD_ORDER = "ADD_ORDER";
 export const SET_ORDERS = "SET_ORDERS";
 
 export const addOrder = (cartItems, totalAmount, restaurantName) => {
-    console.log("thisis add orders");
   return async (dispatch, getState) => {
-    console.log(ADD_ORDER);
     const token = getState().auth.token;
     const userId = getState().auth.userId;
     const date = new Date();
@@ -26,9 +24,7 @@ export const addOrder = (cartItems, totalAmount, restaurantName) => {
           }),
         }
       );
-    //   console.log('this is addorders',response);
       if (!response.ok) {
-          console.log('response')
         throw new Error("something went wrong!");
       }
       const resData = await response.json();
@@ -50,7 +46,6 @@ export const addOrder = (cartItems, totalAmount, restaurantName) => {
 
 export const fetchOrders = () => {
   return async (dispatch, getState) => {
-    console.log('fetchingorders')
     const userId = getState().auth.userId;
     try {
       const response =

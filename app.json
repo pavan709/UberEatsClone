@@ -20,10 +20,14 @@
       "supportsTablet": true
     },
     "android": {
+
+      "package":"com.pavan709.UberEatsClone",
+      "versionCode":1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "permissions":[]
     },
     "web": {
       "favicon": "./assets/favicon.png"

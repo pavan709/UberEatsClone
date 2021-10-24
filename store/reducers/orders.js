@@ -13,7 +13,6 @@ export default (state=initalState,action) => {
                 orders:action.orders,
             }
         case ADD_ORDER:
-            // console.log(action.name,action.cartItem)
             const order = new Order(
                 action.orderData.id,
                 action.orderData.items,

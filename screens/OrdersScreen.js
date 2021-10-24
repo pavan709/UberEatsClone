@@ -22,7 +22,7 @@ const OrdersScreen = () => {
     try{
         await dispatch(ordersActions.fetchOrders()).then(() => {
           setIsLoading(false)
-        }).catch(err => {setError(err);setIsLoading(false);});
+        }).catch(err => {setError('err');setIsLoading(false);});
     }catch(err)
     {
         setError(err);
@@ -33,12 +33,11 @@ const OrdersScreen = () => {
     fetchOrders();
   }, [fetchOrders]);
 
-//   console.log(orders);
 
 if(error)
 {
     return (
-        <View><Text>Something went wrong!</Text>
+        <View style={styles.centered}><Text>Something went wrong!</Text>
         <Button style={{marginTop:10}} title="Retry" color={Colors.fancy6} onPress={fetchOrders} /></View>
     )
 }if (isLoading) {

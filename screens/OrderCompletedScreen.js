@@ -8,24 +8,8 @@ import firebase from "../firebase";
 import * as orderActions from '../store/actions/orders'
 const OrderCompletedScreen = () => {
   const latestOrder = useSelector(state => state.orders.orders[0]);
-  // console.log(latestOrder);
-  // console.log("in ordercompletedr");
-  // const { items, restaurantName } = useSelector(
-  //   (state) => state.cart.selectedItems
-  // );
-  // // we are removing $ symbol first from string and then accumulation with reduce method
-  // const total = items
-  //   .map((item) => Number(item.price.replace("₹", "")))
-  //   .reduce((prev, curr) => prev + curr, 0);
-  // const totalUSD = total.toLocaleString("en-US", {
-  //   style: "currency",
-  //   currency: "IND",
-  // });
-
-  // console.log(latestOrder);
 
   return (
-    // <View><Text>asldfhlkasjdf</Text></View>
     <SafeAreaView style={styles.order}>
       <View style={{ margin: 15, alignItems: "center", height: "100%" }}>
         <LottieView

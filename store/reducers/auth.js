@@ -20,7 +20,6 @@ export default (state = initalState, action) => {
                 didTryAutoLogin:true,
             }
         case LOGOUT:
-            console.log('logout reducer')
             return  {
                 ...initalState,
                 didTryAutoLogin:true,

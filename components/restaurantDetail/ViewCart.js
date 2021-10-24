@@ -11,7 +11,6 @@ import {
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import OrderItem from "./OrderItem";
-import firebase from "../../firebase";
 import LottieView from "lottie-react-native";
 import * as orderActions from '../../store/actions/orders';
 import * as cartActions from '../../store/actions/cart';
@@ -39,9 +38,9 @@ const dispatch = useDispatch();
   const addOrderHandler = async () => {
     try{
       await dispatch(orderActions.addOrder(items,total,restaurantName));
-      // await dispatch(cartActions.clearCart());
+      await dispatch(cartActions.clearCart());
       setLoading(false),
-      props.navigation.navigate('OrderCompleted')
+      props.navigation.replace('OrderCompleted')
     }
     catch(error)
     {

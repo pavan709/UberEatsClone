@@ -12,10 +12,8 @@ export default (state = intialState, action) => {
           items: [...newState.selectedItems.items, action.mealsData],
           restaurantName: action.mealsData.restaurantName,
         };
-        // console.log(newState, "⭐");
         return newState;
       } else {
-        console.log("inside else");
         newState.selectedItems = {
           items: [
             ...newState.selectedItems.items.filter(
@@ -24,7 +22,6 @@ export default (state = intialState, action) => {
           ],
           restaurantName: action.mealsData.restaurantName,
         };
-        console.log(newState.selectedItems.items.length);
         return newState;
       }
     }

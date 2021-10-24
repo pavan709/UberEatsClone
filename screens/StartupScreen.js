@@ -12,7 +12,6 @@ const StartupScreen = props => {
     const dispatch = useDispatch();
     useEffect(() => {
         const tryLogin = async () => {
-            // await AsyncStorage.removeItem("userData");
             const userData = await AsyncStorage.getItem('userData');
             if(!userData)
             {
