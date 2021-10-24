@@ -50,10 +50,11 @@ export const addOrder = (cartItems, totalAmount, restaurantName) => {
 
 export const fetchOrders = () => {
   return async (dispatch, getState) => {
+    console.log('fetchingorders')
     const userId = getState().auth.userId;
     try {
       const response =
-        await (`https://ubereatsclone-dd0ff-default-rtdb.firebaseio.com/orders/${userId}.json`,
+        await fetch(`https://ubereatsclone-dd0ff-default-rtdb.firebaseio.com/orders/${userId}.json`,
         { method: "GET" });
       if (!response.ok) {
         throw new Error("something went wrong!");

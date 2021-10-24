@@ -1,21 +1,23 @@
 import React from 'react'
 import { Platform,StyleSheet, Text, View,TouchableOpacity,TouchableNativeFeedback } from 'react-native'
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
-
-const BottomTabs = () => {
+let TouchableCmp = TouchableOpacity;
+if (Platform.OS === "android" && Platform.Version >= 22)
+  TouchableCmp = TouchableNativeFeedback;
+const BottomTabs = (props) => {
     return (
         <View style={styles.screen}>
             <Icon icon="home" text="Home" />
             <Icon icon="search" text="Browse" />
             <Icon icon="shopping-bag" text="Grocery" />
-            <Icon icon="receipt" text="Orders" />
+            <Icon icon="receipt" text="Orders" onPress={() => props.navigation.navigate('Orders')} />
             <Icon icon="user" text="Account" />
         </View>
     )
 }
 
 const Icon = props => (
-    <TouchableOpacity>
+    <TouchableCmp onPress={props.onPress}>
 
     <View>
         <FontAwesome5 name={props.icon} size={25} style={{
@@ -23,7 +25,7 @@ const Icon = props => (
         }}/>
         <Text style={{fontFamily:'open-sans'}}>{props.text}</Text>
     </View>
-    </TouchableOpacity>
+    </TouchableCmp>
 )
 export default BottomTabs
 

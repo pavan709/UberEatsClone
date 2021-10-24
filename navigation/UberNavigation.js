@@ -4,6 +4,7 @@ import HomeScreen from "../screens/HomeScreen";
 import RestaurantDetailScreen from "../screens/RestaurantDetailScreen";
 import OrderCompletedScreen from "../screens/OrderCompletedScreen";
 import AuthScreen from "../screens/AuthScreen";
+import OrdersScreen from "../screens/OrdersScreen";
 
 const Stack = createStackNavigator();
 const screenOptions = {
@@ -18,6 +19,7 @@ export const UberNavigator = () => {
         component={RestaurantDetailScreen}
       />
       <Stack.Screen name="OrderCompleted" component={OrderCompletedScreen} />
+      <Stack.Screen name="Orders" component={OrdersScreen} />
     </Stack.Navigator>
   );
 };

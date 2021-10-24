@@ -75,7 +75,7 @@ const HomeScreen = (props) => {
         </View>
       )}
       <Divider width={1} />
-      <BottomTabs />
+      <BottomTabs navigation={props.navigation} />
     </SafeAreaView>
   );
 };
